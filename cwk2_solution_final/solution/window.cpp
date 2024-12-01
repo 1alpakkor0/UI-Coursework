@@ -20,19 +20,19 @@ QuakeWindow::QuakeWindow(): QMainWindow(), statsDialog(nullptr)
   addHelpMenu();
 
   setMinimumWidth(MIN_WIDTH);
-  setWindowTitle("Quake Tool");
+  setWindowTitle("Water Quality Monitor");
 }
 
 
 void QuakeWindow::createMainWidget()
 {
-  table = new QTableView();
-  table->setModel(&model);
+  dashboard = new Dashboard(this);
+  dashboard->setModel(&model);
 
   QFont tableFont = QFontDatabase::systemFont(QFontDatabase::FixedFont);
-  table->setFont(tableFont);
+  dashboard->setFont(tableFont);
 
-  setCentralWidget(table); 
+  setCentralWidget(dashboard); 
 }
 
 
@@ -47,6 +47,16 @@ void QuakeWindow::createFileSelectors()
   periodOptions << "hour" << "day" << "week" << "month";
   period = new QComboBox();
   period->addItems(periodOptions);
+
+
+
+
+  QStringList locationOptions;
+  locationOptions << "All Locations" << "Region 1" << "Region 2" << "Region 3"; // Example regions
+  locationSelector = new QComboBox();
+  locationSelector->addItems(locationOptions);
+
+  filterButton = new QPushButton("Filter Data");
 }
 
 
@@ -78,6 +88,15 @@ void QuakeWindow::createToolBar()
 
   toolBar->addWidget(loadButton);
   toolBar->addWidget(statsButton);
+
+
+
+    // Add location selector and filter button
+    QLabel* locationLabel = new QLabel("Location");
+    locationLabel->setAlignment(Qt::AlignVCenter);
+    toolBar->addWidget(locationLabel);
+    toolBar->addWidget(locationSelector);
+    toolBar->addWidget(filterButton);
 
   addToolBar(Qt::LeftToolBarArea, toolBar);
 }

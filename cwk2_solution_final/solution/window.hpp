@@ -38,9 +38,18 @@ class QuakeWindow: public QMainWindow
     QLabel* fileInfo;          // status bar info on current file
     StatsDialog* statsDialog;  // dialog to display stats
 
+
+    Dashboard* dashboard;   // Dashboard widget
+    QComboBox* locationSelector;    // Selector for geographic region
+    QPushButton* filterButton;    // Button for filtering the data 
+
+
   private slots:
     void setDataLocation();
     void openCSV();
     void displayStats();
     void about();
+
+    void loadPollutantData();   // Load pollutant data from csv file
+    void filterData();    // Filter displayed data
 };
